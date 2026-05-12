@@ -1,7 +1,10 @@
-FROM openjdk:8-jre-alpine
+# 既然这个能拉下来，就用这个作为新地基
+FROM eclipse-temurin:8-jre-alpine
 
 WORKDIR /home
 
+# 确保 Jenkins 构建出来的 jar 包能被正确拷贝
 COPY target/*.jar /home
 
-ENTRYPOINT java -jar /home/*.jar
+# 建议使用这种写法，能更好地处理路径和文件名
+ENTRYPOINT ["sh", "-c", "java -jar /home/*.jar"]
